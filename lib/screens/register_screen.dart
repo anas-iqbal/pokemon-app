@@ -48,7 +48,7 @@ class RegisterScreen extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(right: 20, left: 20),
-                  child: loginForm(context),
+                  child: registrationForm(context),
                 ),
               ],
             ),
@@ -58,10 +58,10 @@ class RegisterScreen extends StatelessWidget {
     );
   }
 
-  Widget loginForm(BuildContext context) {
+  Widget registrationForm(BuildContext context) {
     return FormBuilder(
       key: _registrationFormKey,
-      autovalidateMode: AutovalidateMode.onUserInteraction,
+      autovalidateMode: AutovalidateMode.disabled,
       child: Container(
         width: width * 0.80,
         child: Padding(

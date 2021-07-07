@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:pokemon_app/utils/app_theme.dart';
 
 class TextFieldWidget extends StatelessWidget {
   TextFieldWidget({
     Key key,
+    this.name,
     this.title,
     this.enableSuggestion = true,
     this.autoFillHints,
@@ -54,6 +56,7 @@ class TextFieldWidget extends StatelessWidget {
   final bool enableSuggestion;
   final List<String> autoFillHints;
   final String title;
+  final String name;
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +73,8 @@ class TextFieldWidget extends StatelessWidget {
                       fontSize: 16, color: AppTheme.colorTextFieldTextColor),
                 ),
               ),
-        TextFormField(
+        FormBuilderTextField(
+          name: name,
           enableSuggestions: enableSuggestion,
           enabled: enabled,
           textAlign: textAlign,
@@ -127,7 +131,6 @@ class TextFieldWidget extends StatelessWidget {
           controller: controller,
           onChanged: onChanged,
           maxLength: maxLength,
-          onFieldSubmitted: onSubmit,
         ),
       ],
     );
