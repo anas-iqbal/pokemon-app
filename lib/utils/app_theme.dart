@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AppTheme {
-  static Color colorPrimary = HexColor("#FF5722");
+  static Color colorPrimary = HexColor("#253c90");
   static Color colorBackground = HexColor("#FCFBFE");
   static Color colorCard = Colors.white;
   static Color colorAppBarText = Colors.white;

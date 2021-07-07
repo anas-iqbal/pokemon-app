@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokemon_app/bloc/auth/auth_cubit.dart';
 import 'package:pokemon_app/bloc/auth/auth_state.dart';
 import 'package:pokemon_app/screens/home_screen.dart';
+import 'package:pokemon_app/screens/login_screen.dart';
 
 class SplashScreen extends StatelessWidget {
   @override
@@ -10,10 +11,10 @@ class SplashScreen extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
     return BlocConsumer<AuthCubit, AuthState>(listener: (context, state) {
       if (state is AuthenticatedState) {
-        if (state.isAuthenticated) {
+        if (!state.isAuthenticated) {
           Navigator.of(context)
               .push(MaterialPageRoute(builder: (BuildContext context) {
-            return HomeScreen();
+            return LoginScreen();
           }));
         }
       }
