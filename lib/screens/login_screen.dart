@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:pokemon_app/bloc/home/home_cubit.dart';
 import 'package:pokemon_app/bloc/login/login_cubit.dart';
 import 'package:pokemon_app/bloc/login/login_state.dart';
 import 'package:pokemon_app/bloc/registration/registration_cubit.dart';
@@ -27,8 +28,8 @@ class LoginScreen extends StatelessWidget {
         if (state.isLoginSuccess) {
           Navigator.of(context)
               .push(MaterialPageRoute(builder: (BuildContext context) {
-            return BlocProvider<LoginCubit>(
-              create: (context) => LoginCubit(),
+            return BlocProvider<HomeCubit>(
+              create: (context) => HomeCubit(),
               child: HomeScreen(),
             );
           }));

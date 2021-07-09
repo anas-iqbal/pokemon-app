@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokemon_app/bloc/auth/auth_cubit.dart';
 import 'package:pokemon_app/bloc/auth/auth_state.dart';
+import 'package:pokemon_app/bloc/home/home_cubit.dart';
 import 'package:pokemon_app/bloc/login/login_cubit.dart';
+import 'package:pokemon_app/screens/home_screen.dart';
 import 'package:pokemon_app/screens/home_screen.dart';
 import 'package:pokemon_app/screens/login_screen.dart';
 
@@ -23,7 +25,10 @@ class SplashScreen extends StatelessWidget {
         } else {
           Navigator.of(context)
               .push(MaterialPageRoute(builder: (BuildContext context) {
-            return HomeScreen();
+            return BlocProvider<HomeCubit>(
+              create: (context) => HomeCubit()..getPokemonList(),
+              child: HomeScreen(),
+            );
           }));
         }
       }
