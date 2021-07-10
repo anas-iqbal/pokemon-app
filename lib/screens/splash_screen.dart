@@ -15,21 +15,29 @@ class SplashScreen extends StatelessWidget {
     return BlocConsumer<AuthCubit, AuthState>(listener: (context, state) {
       if (state is AuthenticatedState) {
         if (!state.isAuthenticated) {
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (BuildContext context) {
-            return BlocProvider<LoginCubit>(
-              create: (context) => LoginCubit(),
-              child: LoginScreen(),
-            );
-          }));
+          Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(
+              builder: (context) {
+                return BlocProvider<LoginCubit>(
+                  create: (context) => LoginCubit(),
+                  child: LoginScreen(),
+                );
+              },
+            ),
+            (Route<dynamic> route) => false,
+          );
         } else {
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (BuildContext context) {
-            return BlocProvider<HomeCubit>(
-              create: (context) => HomeCubit()..getPokemonList(),
-              child: HomeScreen(),
-            );
-          }));
+          Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(
+              builder: (context) {
+                return BlocProvider<HomeCubit>(
+                  create: (context) => HomeCubit()..getPokemonList(),
+                  child: HomeScreen(),
+                );
+              },
+            ),
+            (Route<dynamic> route) => false,
+          );
         }
       }
     }, builder: (context, snapshot) {

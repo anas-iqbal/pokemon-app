@@ -18,7 +18,7 @@ class LoadingState extends HomeState {
 class LoadedApiSuccessState extends HomeState {
   LoadedApiSuccessState(this.isLoginSuccess, this.pokemonList);
   final bool isLoginSuccess;
-  final PokemonListResponseModel pokemonList;
+  final List<Pokemon> pokemonList;
   @override
   List<Object> get props => [isLoginSuccess, pokemonList];
 }

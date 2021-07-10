@@ -34,12 +34,14 @@ class PokemonListResponseModel {
 class Pokemon {
   String name;
   String url;
+  bool isFavourite;
 
   Pokemon({this.name, this.url});
 
   Pokemon.fromJson(Map<String, dynamic> json) {
     name = json['name'];
     url = json['url'];
+    isFavourite = json['isFavourite'] == null ? false : json['isFavourite'];
   }
 
   Map<String, dynamic> toJson() {
