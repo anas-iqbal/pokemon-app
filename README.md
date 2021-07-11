@@ -10,6 +10,7 @@ List of Pokemon API.
 Mark Favourite Option.
 Favourites saved of user in local storage.
 Used flutter form builder for validations.
+generic exception handler class.
 
 
 Used bloc with cubit for state management, tried it for the first time so definately there could be room for improvments.
