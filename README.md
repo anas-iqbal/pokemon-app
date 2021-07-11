@@ -13,4 +13,4 @@ Used flutter form builder for validations.
 generic exception handler class.
 
 
-Used bloc with cubit for state management, tried it for the first time so definately there could be room for improvments.
+Used bloc with cubit for state management, been using GetX, tried this for the first time so definately there could be room for improvments.
