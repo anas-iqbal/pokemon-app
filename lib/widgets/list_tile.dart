@@ -59,7 +59,7 @@ class PokemonListTile extends StatelessWidget {
                                   },
                                   child: Row(
                                     children: [
-                                      Text("Unmark as ",
+                                      Text("Favourite",
                                           style: TextStyle(
                                               color: AppTheme.colorPrimary,
                                               fontWeight: FontWeight.bold)),
@@ -77,12 +77,12 @@ class PokemonListTile extends StatelessWidget {
                                   },
                                   child: Row(
                                     children: [
-                                      Text("Mark as ",
+                                      Text("Favourite",
                                           style: TextStyle(
                                               color: AppTheme.colorPrimary,
                                               fontWeight: FontWeight.bold)),
                                       Icon(
-                                        Icons.star_border_outlined,
+                                        Icons.star,
                                         color: AppTheme.colorPrimary,
                                         size: 20.0,
                                       ),

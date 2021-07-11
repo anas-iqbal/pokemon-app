@@ -25,7 +25,7 @@ class AppBarWidget extends StatelessWidget {
               GestureDetector(
                 onTap: () {},
                 child: Icon(
-                  Icons.shopping_basket,
+                  Icons.star,
                   color: Colors.white,
                   size: 30.0,
                 ),

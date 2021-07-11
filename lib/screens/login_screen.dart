@@ -29,7 +29,7 @@ class LoginScreen extends StatelessWidget {
           Navigator.of(context)
               .push(MaterialPageRoute(builder: (BuildContext context) {
             return BlocProvider<HomeCubit>(
-              create: (context) => HomeCubit(),
+              create: (context) => HomeCubit()..getUserFavouriteList(),
               child: HomeScreen(),
             );
           }));

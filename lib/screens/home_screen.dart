@@ -16,7 +16,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  var homeCubit;
+  HomeCubit homeCubit;
   @override
   void initState() {
     super.initState();
@@ -24,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    homeCubit = BlocProvider.of<HomeCubit>(context, listen: false);
+    var homeCubit = BlocProvider.of<HomeCubit>(context, listen: false);
     return BlocConsumer<HomeCubit, HomeState>(listener: (context, state) {
       if (state is LoadedApiSuccessState) {
         var abc = state.pokemonList;
@@ -38,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
               preferredSize: Size.fromHeight(AppBar().preferredSize.height),
               child: AppBarWidget(
                 title: 'Pokemons',
-                showBasket: true,
+                showBasket: false,
               )),
           body: LoaderWidget(
             isTrue: state is LoadingState ? state.isLoading : false,
@@ -57,7 +57,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             return PokemonListTile(
                               pokemon: state.pokemonList[index],
                               onFavouriteClick: (selectedPokemon) {
-                                homeCubit.markPokemonFavourite(selectedPokemon);
+                                var x = BlocProvider.of<HomeCubit>(context,
+                                    listen: false);
+                                x.markPokemonFavourite(selectedPokemon);
                               },
                               homeCubit: homeCubit,
                             );

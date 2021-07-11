@@ -31,7 +31,9 @@ class SplashScreen extends StatelessWidget {
             MaterialPageRoute(
               builder: (context) {
                 return BlocProvider<HomeCubit>(
-                  create: (context) => HomeCubit()..getPokemonList(),
+                  create: (context) => HomeCubit()
+                    ..getPokemonList()
+                    ..getUserFavouriteList(),
                   child: HomeScreen(),
                 );
               },

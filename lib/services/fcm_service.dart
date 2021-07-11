@@ -1,11 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:pokemon_app/utils/global.dart';
 
 class FCMService {
   static isUserLoggedIn() {
     final FirebaseAuth _auth = FirebaseAuth.instance;
-    if (_auth.currentUser != null)
+    if (_auth.currentUser != null) {
+      cache.userEmail = _auth.currentUser.email;
       return true;
-    else
+    } else
       return false;
   }
 
