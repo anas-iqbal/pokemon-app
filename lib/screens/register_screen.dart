@@ -3,9 +3,14 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:pokemon_app/bloc/auth/auth_cubit.dart';
+import 'package:pokemon_app/bloc/home/home_cubit.dart';
 import 'package:pokemon_app/bloc/registration/registration_cubit.dart';
+import 'package:pokemon_app/bloc/registration/registration_state.dart';
+import 'package:pokemon_app/screens/home_screen.dart';
 import 'package:pokemon_app/utils/app_theme.dart';
+import 'package:pokemon_app/utils/loader_widget.dart';
 import 'package:pokemon_app/utils/validators.dart';
+import 'package:pokemon_app/widgets/dialogs.dart';
 import 'package:pokemon_app/widgets/text_field_widget.dart';
 
 class RegisterScreen extends StatelessWidget {
@@ -19,43 +24,72 @@ class RegisterScreen extends StatelessWidget {
     this.context = context;
     height = MediaQuery.of(context).size.height;
     width = MediaQuery.of(context).size.height;
-    return Scaffold(
-      backgroundColor: AppTheme.colorBackground,
-      body: SafeArea(
-        child: Container(
-          width: width,
-          height: height,
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
-                  height: height * 0.12,
+    return BlocConsumer<RegistrationCubit, RegistrationState>(
+        listener: (context, state) {
+      if (state is RegistrationFailedState) {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return ErrorDialog(message: state.errorMsg.message);
+            });
+      } else if (state is RegistrationSuccessState) {
+        Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(
+            builder: (context) {
+              return BlocProvider<HomeCubit>(
+                create: (context) => HomeCubit()
+                  ..getPokemonList()
+                  ..getUserFavouriteList(),
+                child: HomeScreen(),
+              );
+            },
+          ),
+          (Route<dynamic> route) => false,
+        );
+      }
+    }, builder: (context, state) {
+      return Scaffold(
+        backgroundColor: AppTheme.colorBackground,
+        body: LoaderWidget(
+          isTrue: state is LoadingState ? state.isLoading : false,
+          child: SafeArea(
+            child: Container(
+              width: width,
+              height: height,
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: height * 0.12,
+                    ),
+                    Image(
+                      image: AssetImage('assets/ic_pokemon.png'),
+                      width: height * 0.18,
+                    ),
+                    SizedBox(
+                      height: height * 0.02,
+                    ),
+                    Text(
+                      "Gotta Catch 'Em All",
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(
+                      height: height * 0.02,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 20, left: 20),
+                      child: registrationForm(context),
+                    ),
+                  ],
                 ),
-                Image(
-                  image: AssetImage('assets/ic_pokemon.png'),
-                  width: height * 0.18,
-                ),
-                SizedBox(
-                  height: height * 0.02,
-                ),
-                Text(
-                  "Gotta Catch 'Em All",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(
-                  height: height * 0.02,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 20, left: 20),
-                  child: registrationForm(context),
-                ),
-              ],
+              ),
             ),
           ),
         ),
-      ),
-    );
+      );
+    });
   }
 
   Widget registrationForm(BuildContext context) {
@@ -95,6 +129,7 @@ class RegisterScreen extends StatelessWidget {
                 height: 20,
               ),
               FormBuilderTextField(
+                obscureText: true,
                 name: 'password',
                 decoration: InputDecoration(
                   hintText: "Password",
@@ -121,6 +156,7 @@ class RegisterScreen extends StatelessWidget {
                 height: 20,
               ),
               FormBuilderTextField(
+                obscureText: true,
                 name: 'confirmPassword',
                 decoration: InputDecoration(
                   hintText: "Confirm Password",
@@ -181,10 +217,7 @@ class RegisterScreen extends StatelessWidget {
               regCubit.register(
                   _registrationFormKey.currentState?.value['email'],
                   _registrationFormKey.currentState?.value['password']);
-            } else {
-              print('Invalid');
             }
-            print(_registrationFormKey.currentState?.value);
             // FocusScope.of(context).requestFocus(new FocusNode());
           },
           shape: RoundedRectangleBorder(

@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:pokemon_app/utils/exception_handler.dart';
 
 abstract class LoginState extends Equatable {}
 
@@ -22,10 +23,10 @@ class LoginSuccessState extends LoginState {
 }
 
 class LoginFailState extends LoginState {
-  LoginFailState(this.isLoginFailed, this.errorMsg);
+  LoginFailState(this.isLoginFailed, this.errorData);
   final bool isLoginFailed;
-  final String errorMsg;
+  final ExceptionData errorData;
 
   @override
-  List<Object> get props => [isLoginFailed, errorMsg];
+  List<Object> get props => [isLoginFailed, errorData];
 }

@@ -40,20 +40,24 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
           width: MediaQuery.of(context).size.width * 0.02,
           child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: ListView.builder(
-                  padding: const EdgeInsets.all(8),
-                  itemCount: homeCubit.favouriteList.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return FavouriteTile(
-                      pokemon: homeCubit.favouriteList[index],
-                      removeClick: (selectedPokemon, status) {
-                        var x =
-                            BlocProvider.of<HomeCubit>(context, listen: false);
-                        x.changeFavouriteStatus(selectedPokemon, status);
-                        setState(() {});
-                      },
-                    );
-                  })),
+              child: homeCubit.favouriteList.isNotEmpty
+                  ? ListView.builder(
+                      padding: const EdgeInsets.all(8),
+                      itemCount: homeCubit.favouriteList.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return FavouriteTile(
+                          pokemon: homeCubit.favouriteList[index],
+                          removeClick: (selectedPokemon, status) {
+                            var x = BlocProvider.of<HomeCubit>(context,
+                                listen: false);
+                            x.changeFavouriteStatus(selectedPokemon, status);
+                            setState(() {});
+                          },
+                        );
+                      })
+                  : Center(
+                      child: Text("Currently has no favourite items"),
+                    )),
         ),
       ),
     );

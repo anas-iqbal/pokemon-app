@@ -5,6 +5,7 @@ import 'package:pokemon_app/bloc/home/home_states.dart';
 import 'package:pokemon_app/models/pokemon_list_response_mode.dart';
 import 'package:pokemon_app/services/fcm_service.dart';
 import 'package:pokemon_app/services/pokemon_service.dart';
+import 'package:pokemon_app/utils/exception_handler.dart';
 import 'package:pokemon_app/utils/shared_pref_helder.dart';
 
 class HomeCubit extends Cubit<HomeState> {
@@ -17,14 +18,29 @@ class HomeCubit extends Cubit<HomeState> {
     favouriteList = await SharedPreferenceHelper.getUserFavourites();
   }
 
+  void logoutUser() async {
+    try {
+      emit(LoadingState((true)));
+      var res = await FCMService.logout();
+      emit(LoadingState((false)));
+      emit(LogoutSuccessState(true));
+    } catch (e) {
+      emit(LoadingState((false)));
+      var exceptionData = await ExceptionHandler().handleException(e);
+      emit(LoadingAPIFailState(true, exceptionData));
+    }
+  }
+
   void getPokemonList() async {
     emit(LoadingState((true)));
-    PokemonListResponseModel res = await _pokemonService.getPokemonList();
-    if (res != null) {
+    try {
+      PokemonListResponseModel res = await _pokemonService.getPokemonList();
       emit(LoadingState((false)));
       emit(LoadedApiSuccessState(true, res.results));
-    } else {
-      emit(LoadingAPIFailState(true, "Failed to register"));
+    } catch (e) {
+      emit(LoadingState((false)));
+      var exceptionData = await ExceptionHandler().handleException(e);
+      emit(LoadingAPIFailState(true, exceptionData));
     }
   }
 

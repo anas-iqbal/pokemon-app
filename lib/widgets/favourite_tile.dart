@@ -56,13 +56,13 @@ class FavouriteTile extends StatelessWidget {
                             },
                             child: Row(
                               children: [
-                                Text("Remove from Favourite",
+                                Text("Umark Favourite",
                                     style: TextStyle(
                                         color: AppTheme.colorPrimary,
                                         fontWeight: FontWeight.bold)),
                                 Icon(
-                                  Icons.remove,
-                                  color: AppTheme.colorPrimary,
+                                  Icons.remove_circle,
+                                  color: AppTheme.colorRed,
                                   size: 20.0,
                                 ),
                               ],

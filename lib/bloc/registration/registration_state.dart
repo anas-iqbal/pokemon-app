@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:pokemon_app/utils/exception_handler.dart';
 
 abstract class RegistrationState extends Equatable {}
 
@@ -24,7 +25,7 @@ class RegistrationSuccessState extends RegistrationState {
 class RegistrationFailedState extends RegistrationState {
   RegistrationFailedState(this.isRegistrationFailed, this.errorMsg);
   final bool isRegistrationFailed;
-  final String errorMsg;
+  final ExceptionData errorMsg;
 
   @override
   List<Object> get props => [isRegistrationFailed, errorMsg];

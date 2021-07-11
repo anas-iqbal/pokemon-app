@@ -9,7 +9,9 @@ import 'package:pokemon_app/bloc/registration/registration_cubit.dart';
 import 'package:pokemon_app/screens/home_screen.dart';
 import 'package:pokemon_app/screens/register_screen.dart';
 import 'package:pokemon_app/utils/app_theme.dart';
+import 'package:pokemon_app/utils/loader_widget.dart';
 import 'package:pokemon_app/utils/validators.dart';
+import 'package:pokemon_app/widgets/dialogs.dart';
 import 'package:pokemon_app/widgets/text_field_widget.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -26,47 +28,63 @@ class LoginScreen extends StatelessWidget {
     return BlocConsumer<LoginCubit, LoginState>(listener: (context, state) {
       if (state is LoginSuccessState) {
         if (state.isLoginSuccess) {
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (BuildContext context) {
-            return BlocProvider<HomeCubit>(
-              create: (context) => HomeCubit()..getUserFavouriteList(),
-              child: HomeScreen(),
-            );
-          }));
+          Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(
+              builder: (context) {
+                return BlocProvider<HomeCubit>(
+                  create: (context) => HomeCubit()
+                    ..getPokemonList()
+                    ..getUserFavouriteList(),
+                  child: HomeScreen(),
+                );
+              },
+            ),
+            (Route<dynamic> route) => false,
+          );
         }
+      } else if (state is LoginFailState) {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return ErrorDialog(message: state.errorData.message);
+            });
       }
-    }, builder: (context, snapshot) {
+    }, builder: (context, state) {
       return Scaffold(
         backgroundColor: AppTheme.colorBackground,
-        body: SafeArea(
-          child: Container(
-            width: width,
-            height: height,
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    height: height * 0.12,
-                  ),
-                  Image(
-                      image: AssetImage('assets/ic_pokemon.png'),
-                      width: height * 0.20),
-                  SizedBox(
-                    height: height * 0.02,
-                  ),
-                  Text(
-                    "Gotta Catch 'Em All",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(
-                    height: height * 0.02,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 20, left: 20),
-                    child: loginForm(context),
-                  ),
-                ],
+        body: LoaderWidget(
+          isTrue: state is LoadingState ? state.isLoading : false,
+          child: SafeArea(
+            child: Container(
+              width: width,
+              height: height,
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: height * 0.12,
+                    ),
+                    Image(
+                        image: AssetImage('assets/ic_pokemon.png'),
+                        width: height * 0.20),
+                    SizedBox(
+                      height: height * 0.02,
+                    ),
+                    Text(
+                      "Gotta Catch 'Em All",
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(
+                      height: height * 0.02,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 20, left: 20),
+                      child: loginForm(context),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

@@ -16,24 +16,6 @@ class AppBarWidget extends StatelessWidget {
         style: TextStyle(fontWeight: FontWeight.bold),
       ),
       centerTitle: true,
-      actions: [
-        Padding(
-          padding: EdgeInsets.only(right: width * 0.05),
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              GestureDetector(
-                onTap: () {},
-                child: Icon(
-                  Icons.star,
-                  color: Colors.white,
-                  size: 30.0,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
     );
   }
 }
