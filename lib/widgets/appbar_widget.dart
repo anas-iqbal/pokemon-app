@@ -30,17 +30,6 @@ class AppBarWidget extends StatelessWidget {
                   size: 30.0,
                 ),
               ),
-              Positioned(
-                top: 0,
-                right: 0,
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle, color: Colors.white),
-                  alignment: Alignment.center,
-                  child: Text(''),
-                ),
-              )
             ],
           ),
         ),

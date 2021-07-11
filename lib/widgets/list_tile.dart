@@ -6,7 +6,7 @@ import 'package:pokemon_app/utils/app_theme.dart';
 
 class PokemonListTile extends StatelessWidget {
   final Pokemon pokemon;
-  final Function(Pokemon selectedPokemon) onFavouriteClick;
+  final Function(Pokemon selectedPokemon, bool status) onFavouriteClick;
   final HomeCubit homeCubit;
   PokemonListTile(
       {Key key,
@@ -55,25 +55,7 @@ class PokemonListTile extends StatelessWidget {
                           homeCubit.isFavourite(pokemon)
                               ? GestureDetector(
                                   onTap: () {
-                                    onFavouriteClick(pokemon);
-                                  },
-                                  child: Row(
-                                    children: [
-                                      Text("Favourite",
-                                          style: TextStyle(
-                                              color: AppTheme.colorPrimary,
-                                              fontWeight: FontWeight.bold)),
-                                      Icon(
-                                        Icons.star_border_outlined,
-                                        color: AppTheme.colorPrimary,
-                                        size: 20.0,
-                                      ),
-                                    ],
-                                  ),
-                                )
-                              : GestureDetector(
-                                  onTap: () {
-                                    onFavouriteClick(pokemon);
+                                    onFavouriteClick(pokemon, false);
                                   },
                                   child: Row(
                                     children: [
@@ -83,6 +65,24 @@ class PokemonListTile extends StatelessWidget {
                                               fontWeight: FontWeight.bold)),
                                       Icon(
                                         Icons.star,
+                                        color: AppTheme.colorPrimary,
+                                        size: 20.0,
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              : GestureDetector(
+                                  onTap: () {
+                                    onFavouriteClick(pokemon, true);
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Text("Favourite",
+                                          style: TextStyle(
+                                              color: AppTheme.colorPrimary,
+                                              fontWeight: FontWeight.bold)),
+                                      Icon(
+                                        Icons.star_outline_outlined,
                                         color: AppTheme.colorPrimary,
                                         size: 20.0,
                                       ),

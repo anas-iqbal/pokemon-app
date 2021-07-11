@@ -40,10 +40,9 @@ class HomeCubit extends Cubit<HomeState> {
     return false;
   }
 
-  markPokemonFavourite(Pokemon item) async {
+  changeFavouriteStatus(Pokemon item, bool status) async {
     print("**************************");
-    item.isFavourite = !item.isFavourite;
-    updateSavedList(item, true);
+    updateSavedList(item, status);
 
     // favouriteList.forEach((element) {
     //   if (element.name == item.name) {
@@ -57,14 +56,13 @@ class HomeCubit extends Cubit<HomeState> {
     var abc = favouriteList;
     var alreadyExist = favouriteList
         .firstWhere((x) => x.name == selectedItem.name, orElse: () => null);
-    if (alreadyExist == null && selectedItem.isFavourite) {
+    if (alreadyExist == null && updateFavStatus) {
       favouriteList.add(selectedItem);
     } else {
-      if (!selectedItem.isFavourite) {
+      if (!updateFavStatus) {
         favouriteList.removeWhere((item) => item.name == selectedItem.name);
       }
     }
-
     SharedPreferenceHelper.saveFavourites(jsonEncode(favouriteList));
   }
 }

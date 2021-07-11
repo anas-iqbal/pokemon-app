@@ -56,10 +56,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           itemBuilder: (BuildContext context, int index) {
                             return PokemonListTile(
                               pokemon: state.pokemonList[index],
-                              onFavouriteClick: (selectedPokemon) {
+                              onFavouriteClick: (selectedPokemon, status) {
                                 var x = BlocProvider.of<HomeCubit>(context,
                                     listen: false);
-                                x.markPokemonFavourite(selectedPokemon);
+                                x.changeFavouriteStatus(
+                                    selectedPokemon, status);
+                                setState(() {});
                               },
                               homeCubit: homeCubit,
                             );
