@@ -1,8 +1,8 @@
 # pokemon_app
 
-Pokeman Assesment App
+Flutter App using PokeApi
 
-Features
+App Functionalities
 
 Login via firebase auth.
 Registration via firebase auth.
